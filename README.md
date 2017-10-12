@@ -116,7 +116,7 @@ $(eval $(call BuildPackage,tun2socks))
 </pre>
 <li>
 <a>default /etc/hosts</a>
-<li>
+</li>
 <pre>
 127.0.0.1 localhost
 ::1       localhost localhost6 ip6-localhost
