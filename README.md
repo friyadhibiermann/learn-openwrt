@@ -1,10 +1,14 @@
-important sed script
+<ul>
+<li>
+<a>important sed script</a>
+</li>
 <pre>
 sed -e '/sip/ s/^#*/# /' -i test.txt
-
 sed -E 's/( )+$//'
 </pre>
-makefile compile
+<li>
+<a>makefile compile</a>
+</li>
 <pre>
 compile:
 	CC="$(CC)" CFLAGS="-Os -pipe -mips32r2 -mtune=mips32r2" shc -r -B -f fdi.sh
@@ -16,9 +20,10 @@ clean:
 
 	rm -rf *.x *.c *.o *.c fdi html
 </pre>
-compile bash script makefile	
+<li>
+<a>compile bash script makefile<>	
+</li>
 <pre>
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fdi
@@ -61,7 +66,9 @@ endef
 
 $(eval $(call BuildPackage,fdi))
 </pre>
-makefile include lib and cmake
+<li>
+<a>makefile include lib and cmake</a>
+</li>
 <pre>
 include $(TOPDIR)/rules.mk
 
@@ -120,3 +127,4 @@ ff02::1   ip6-allnodes
 ff02::2   ip6-allrouters
 ff02::3   ip6-allhosts
 </pre>
+</ul>
