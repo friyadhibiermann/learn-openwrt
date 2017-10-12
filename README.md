@@ -114,7 +114,9 @@ endef
 
 $(eval $(call BuildPackage,tun2socks))
 </pre>
-default /etc/hosts
+<li>
+<a>default /etc/hosts</a>
+<li>
 <pre>
 127.0.0.1 localhost
 ::1       localhost localhost6 ip6-localhost
