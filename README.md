@@ -111,20 +111,20 @@ Berkas ini akan juga tersedia dalam bahasa lain:
 
 FILE SPACE: 
 
- # spasi ganda sebuah file 
+ spasi ganda sebuah file 
  sed G 
 
- # double space sebuah file yang sudah memiliki baris kosong di dalamnya. File keluaran 
- # harus berisi tidak lebih dari satu baris kosong di antara baris teks. 
+ double space sebuah file yang sudah memiliki baris kosong di dalamnya. File keluaran 
+ harus berisi tidak lebih dari satu baris kosong di antara baris teks. 
  Sed * / ^ $ / d; G ' 
 
- # tiga spasi sebuah file 
+ tiga spasi sebuah file 
  sed' G; G ' 
 
- # undo double-spacing (anggap garis genap selalu kosong) 
+ undo double-spacing (anggap garis genap selalu kosong) 
  sed' n; d ' 
 
- # masukkan baris kosong di atas setiap baris yang cocok dengan "regex" 
+ masukkan baris kosong di atas setiap baris yang cocok dengan "regex" 
  sed '/ regex / {x; p; x;}' 
  sed '/ regex / {x; p ; x; G;} '
 
