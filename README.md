@@ -1,4 +1,22 @@
 <ul>
+<li>mount img file ubuntu</li>
+<pre>
+parted Armbian_5.30_Orangepizero_Ubuntu_xenial_default_3.4.113.img
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) unit
+Unit?  [compact]? B
+(parted) print
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start     End          Size         Type     File system  Flags
+ 1      4194304B  1484783615B  1480589312B  primary  ext4
+
+(parted) ^C
+mount -o loop, offset=4194304 Armbian_5.30_Orangepizero_Ubuntu_xenial_default_3.4.113.img /root/mount/
+
+</pre>
 <li>step by step install lede luci dan uboot</li>
 <pre>
 1.install firmware
