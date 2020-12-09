@@ -163,6 +163,8 @@ FILE SPACE:
 
  count lines (mengemulasi "wc -l") 
  sed -n' $ = ' 
+ 
+ echo 'first=url1, second=url2, third=url3' | sed 's/.*first=\([^ ]*\),.*/\1/'
 
 KONVERSI TEKS DAN SUBSTITUSI: 
 
