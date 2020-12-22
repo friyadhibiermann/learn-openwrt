@@ -1,4 +1,70 @@
 <ul>
+<li>iptables firewall</li>
+<pre>
+#Change Default policy to ACCEPT
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+
+#Flush the INPUT / OUTPUT / FORWARD tables
+iptables -F INPUT
+iptables -F OUTPUT
+iptables -F FORWARD
+
+#Allow SSH
+iptables -I INPUT -p tcp --dport 22 -j ACCEPT -m comment --comment "inSSH dport"
+iptables -I INPUT -p tcp --sport 22 -j ACCEPT -m comment --comment "inSSH sport"
+iptables -I OUTPUT -p tcp --sport 22 -j ACCEPT -m comment --comment "outSSH sport"
+iptables -I OUTPUT -p tcp --dport 22 -j ACCEPT -m comment --comment "outSSH dport"
+
+#Change Default policy to DROP
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+#Accept everything that go throught the lo interface
+iptables -A INPUT -i lo -j ACCEPT -m comment --comment "lo INPUT"
+iptables -A OUTPUT -o lo -j ACCEPT -m comment --comment "lo OUTPUT"
+
+#Accept everything on the local network
+iptables -A INPUT -s 192.168.1.0/24 -j ACCEPT
+iptables -A OUTPUT -d 192.168.1.0/24 -j ACCEPT
+iptables -A FORWARD -d 192.168.1.0/24 -j ACCEPT
+ 
+#DNS accept
+iptables -A INPUT -i "$(uci get network.wan.ifname)" -p udp --sport 53 -j ACCEPT
+iptables -A OUTPUT -o "$(uci get network.wan.ifname)" -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -i "$(uci get network.wan.ifname)" -p tcp --sport 53 -j ACCEPT
+iptables -A OUTPUT -o "$(uci get network.wan.ifname)" -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -p udp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -p tcp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+
+#Open PORTS
+iptables -A INPUT -j ACCEPT -p udp --sport 123
+iptables -A OUTPUT -j ACCEPT -p udp --dport 123
+iptables -A FORWARD -j ACCEPT -p udp --sport 123
+iptables -A FORWARD -j ACCEPT -p udp --dport 123
+
+iptables -A INPUT -j ACCEPT -p tcp --dport 443
+iptables -A OUTPUT -j ACCEPT -p tcp --sport 443
+iptables -A FORWARD -j ACCEPT -p tcp --sport 443
+iptables -A FORWARD -j ACCEPT -p tcp --dport 443
+
+#Authorise domains
+iptables -A FORWARD -s github.com -j ACCEPT -m comment --comment "github"
+iptables -A FORWARD -d github.com -j ACCEPT -m comment --comment "github"
+iptables -A FORWARD -s balena-cloud.com -j ACCEPT -m comment --comment "balena-cloud.com"
+iptables -A FORWARD -d balena-cloud.com -j ACCEPT -m comment --comment "balena-cloud.com"
+iptables -A FORWARD -s docker.com -j ACCEPT -m comment --comment "docker.com"
+iptables -A FORWARD -d docker.com -j ACCEPT -m comment --comment "docker.com"
+iptables -A FORWARD -s docker.io -j ACCEPT -m comment --comment "docker.io"
+iptables -A FORWARD -d docker.io -j ACCEPT -m comment --comment "docker.io"
+
+iptables -t nat -I POSTROUTING -o "$(uci get network.wan.ifname)" -j MASQUERADE
+iptables -I INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+</pre>
 <li>mount img file ubuntu</li>
 <pre>
 parted Armbian_5.30_Orangepizero_Ubuntu_xenial_default_3.4.113.img
